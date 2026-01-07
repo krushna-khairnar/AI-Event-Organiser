@@ -24,17 +24,19 @@ export default function DynamicExplorePage() {
     ? parseLocationSlug(slug)
     : { city: null, state: null, isValid: true };
 
+  // Prepare query arguments
+  const queryArgs = isCategory
+    ? { category: slug, limit: 50 }
+    : city && state
+      ? { city, state, limit: 50 }
+      : null;
 
   // Fetch events based on type
   const { data: events, isLoading } = useConvexQuery(
     isCategory
       ? api.events.getEventsByCategory
       : api.events.getEventsByLocation,
-    isCategory
-      ? { category: slug, limit: 50 }
-      : city && state
-        ? { city, state, limit: 50 }
-        : null
+    queryArgs
   );
 
   const handleEventClick = (eventSlug) => {
@@ -105,7 +107,7 @@ export default function DynamicExplorePage() {
           <div className="text-6xl">📍</div>
           <div>
             <h1 className="text-5xl md:text-6xl font-bold">Events in {city}</h1>
-            <p className="text-lg text-muted-foreground mt-2">{state}{country ? `, ${country}` : ''}</p>
+            <p className="text-lg text-muted-foreground mt-2">{state}, India</p>
           </div>
         </div>
 

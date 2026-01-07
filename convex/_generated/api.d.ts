@@ -9,6 +9,8 @@
  */
 
 import type * as events from "../events.js";
+import type * as myevents from "../myevents.js";
+import type * as search from "../search.js";
 import type * as seed from "../seed.js";
 import type * as users from "../users.js";
 
@@ -20,6 +22,8 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   events: typeof events;
+  myevents: typeof myevents;
+  search: typeof search;
   seed: typeof seed;
   users: typeof users;
 }>;

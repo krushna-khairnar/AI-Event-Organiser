@@ -1,4 +1,6 @@
+import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
 
 export const store = mutation({
     args: {},
@@ -59,3 +61,25 @@ export const getCurrentUser = query({
         return user;
     },
 });
+
+export const CompletedOnboarding = mutation({args: {
+        location: v.object({
+            city: v.string(),
+            state: v.optional(v.string()),
+            country: v.string(),
+        }),
+        interests: v.array(v.string()), // Min 3 categories
+    },
+    handler: async (ctx,args) => {
+        // Check if user is logged in or not 
+        // This is something only logged in users can do
+        const user = await ctx.runQuery(internal.users.getCurrentUser);
+
+        await ctx.db.patch(user._id, {
+            location: args.location,
+            interests: args.interests,
+            hasCompletedOnboarding: true,
+            updatedAt: Date.now(),
+        });        return user._id;
+    },
+})

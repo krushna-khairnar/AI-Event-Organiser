@@ -9,13 +9,17 @@ import { Authenticated, Unauthenticated } from 'convex/react'
 import { BarLoader } from "react-spinners"
 import useStoreUser from '@/hooks/use-store-user';
 import { Building, Plus, Ticket } from 'lucide-react';
+import OnboardingModal from "@/components/onboarding-modal";
+import { useOnboarding } from '@/hooks/use-onboarding';
+import SearchLocationBar from './search-location-bar';
 
 const Header = () => {
 
     const storeUser = useStoreUser();
     const isLoading = storeUser?.isLoading ?? false;
-
     const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+    const { showOnboarding, handleOnboardingComplete, handleOnboardingSkip } = useOnboarding();
+
     return (
         <>
             <nav className='fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-xl z-20 border-b'>
@@ -34,7 +38,10 @@ const Header = () => {
                     </Link>
 
                     {/* Search and Location - Desktop Only */}
-
+                    <div className="hidden md:flex flex-1 justify-center">
+                        <SearchLocationBar />
+                    </div>
+                    
                     {/* Right side Actions */}
                     <div className='flex items-center'>
                     {/* Create Events */}
@@ -80,6 +87,9 @@ const Header = () => {
                 </div>
                 
                 {/* Mobile search and Actions */}
+                <div className="md:hidden border-t px-3 py-3">
+                        <SearchLocationBar />
+                    </div>
 
                 {/* Loader */}
                 {isLoading && (
@@ -89,7 +99,8 @@ const Header = () => {
                 )}
             </nav>
 
-            {/* Modals */}
+            {/* Modals - User Onboarding */}
+            
         </>
     )
 }
