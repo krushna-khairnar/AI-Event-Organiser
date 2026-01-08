@@ -1,36 +1,163 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎟️ Spott — AI-Powered Event Management Platform
 
-## Getting Started
+Spott is a **full-stack, production-grade event management platform** that allows users to discover, create, manage, and attend events with ease.  
+It combines **AI-powered event creation**, **role-based access**, **ticketing**, and **subscription-based monetization** into a modern, scalable web application.
 
-First, run the development server:
+Built using **Next.js App Router**, **Convex**, **Clerk Authentication**, and **Gemini AI**, Spott demonstrates real-world engineering practices and system design.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Key Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 👤 Authentication & User Management
+- Secure authentication using **Clerk**
+- Automatic user sync into Convex database
+- Onboarding flow with:
+  - Location selection
+  - Interest preferences
+- Role-based access (User / Organizer / Pro)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### 🎉 Event Creation & Management
+- Create events with:
+  - Title, description, category
+  - Date & time (timezone aware)
+  - Location (physical / online)
+  - Capacity & ticket type
+  - Cover image (Unsplash integration)
+  - Theme customization
+- Slug-based unique event URLs
+- Organizer dashboard for managing events
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🤖 AI Event Generator
+- Generate event details using **Gemini AI**
+- Converts a simple idea into:
+  - Event title
+  - Description
+  - Category
+  - Suggested capacity
+  - Ticket type
+- Strict JSON validation for safe backend usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+### 🎫 Ticketing & Registrations
+- Users can:
+  - Register for events
+  - View tickets under **My Tickets**
+  - Cancel registrations
+- QR-based registration records
+- Organizer access to attendee list
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 💎 Pro Subscription (Monetization)
+- Subscription powered by **Clerk Billing**
+- Free users:
+  - Can create only **1 event**
+  - Limited theme customization
+- Pro users:
+  - Unlimited event creation
+  - Custom theme colors
+  - Pro badge across the app
+
+---
+
+### 🔍 Search & Discovery
+- Category-based event browsing
+- Search by event title
+- Location-based filtering
+- Upcoming events sorted by date
+
+---
+
+### 🛡️ Security & Validation
+- Server-side schema validation with Convex
+- Auth-protected mutations and queries
+- Ownership checks for:
+  - Event edits
+  - Registrations
+  - Check-ins
+
+---
+
+## 🧱 Tech Stack
+
+### Frontend
+- **Next.js 14 (App Router)**
+- **React**
+- **Tailwind CSS**
+- **shadcn/ui**
+- **React Hook Form + Zod**
+
+### Backend
+- **Convex** (Database + Server Functions)
+- **Convex Auth Integration**
+- Schema-driven data modeling
+
+### Authentication & Billing
+- **Clerk Authentication**
+- **Clerk Billing (Pro Plan)**
+
+### AI Integration
+- **Google Gemini (latest SDK)**
+- Server-side AI generation via API routes
+
+---
+
+## 📸 Screenshots
+
+
+### 🏠 Home / Explore Page
+![Home Page](assets/screenshots/home.png)
+
+---
+
+### 📝 AI Event Creation Dashboard
+![Create Event](assets/screenshots/create-event.png)
+
+---
+
+---
+
+### 🏢 My Events (Organizer Dashboard)
+![My Events Dashboard](assets/screenshots/my-events-dashboard.png)
+
+---
+
+### 💎 Pro Upgrade Modal
+![Pro Upgrade Modal](assets/screenshots/pro-upgrade-modal.png)
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_key
+CLERK_SECRET_KEY=your_key
+CONVEX_DEPLOYMENT=your_deployment
+NEXT_PUBLIC_CONVEX_URL=your_url
+GEMINI_API_KEY=your_gemini_key
+
+
+## 🧪 Getting Started
+
+### 1️⃣ Clone the Repository
+git clone https://github.com/your-username/spott.git  
+cd spott  
+
+### 2️⃣ Install Dependencies
+npm install  
+
+### 3️⃣ Start Convex
+npx convex dev  
+
+### 4️⃣ Run the Application
+npm run dev  
+
+Open 👉 http://localhost:3000
