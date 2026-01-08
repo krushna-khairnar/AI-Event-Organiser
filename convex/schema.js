@@ -10,7 +10,7 @@ export default defineSchema({
         imageUrl: v.optional(v.string()),
 
         //Onboarding
-        hasCompletedOnboading: v.optional(v.boolean()),
+        hasCompletedOnboarding: v.optional(v.boolean()),
 
         //Location
         location: v.optional(
@@ -56,7 +56,7 @@ export default defineSchema({
         address: v.optional(v.string()),
         city: v.string(),
         state: v.optional(v.string()),
-        country: v.optional(v.string()),
+        country: v.string(),
 
         // Capacity and Ticketing
         capacity: v.number(),

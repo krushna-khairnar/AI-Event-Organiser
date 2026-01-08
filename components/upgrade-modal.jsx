@@ -13,7 +13,9 @@ import { PricingTable } from "@clerk/nextjs";
 
 export default function UpgradeModal({ isOpen, onClose, trigger = "limit" }) {
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={(open) => {
+        if (!open) onClose();
+    }} >
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <div className="flex items-center gap-2 mb-2">

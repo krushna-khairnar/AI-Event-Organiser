@@ -73,7 +73,7 @@ export default function CreateEventPage() {
 
   const { data: currentUser } = useConvexQuery(api.users.getCurrentUser);
   const { mutate: createEvent, isLoading } = useConvexMutation(
-    api.events.createEvent
+    api.myevents.createEvent
   );
 
   const {

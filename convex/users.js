@@ -35,7 +35,7 @@ export const store = mutation({
         tokenIdentifier: identity.tokenIdentifier,
         email: identity.email ?? "",
         imageUrl: identity.pictureUrl,
-        hasCompletedOnboading: false,
+        hasCompletedOnboarding: false,
         freeEventsCreated: 0,
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -44,42 +44,43 @@ export const store = mutation({
 });
 
 export const getCurrentUser = query({
-    handler: async(ctx) => {
-        const identity = await ctx.auth.getUserIdentity();
-        if(!identity) {
-            return null;
-        }
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      return null;
+    }
 
-        const user = await ctx.db
-        .query("users")
-        .withIndex("by_token", (q) => q.eq("tokenIdentifier", identity.tokenIdentifier))
-        .unique();
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_token", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
+      )
+      .unique();
 
-        if(!user) {
-            throw new Error("User not found");
-        }
-        return user;
-    },
+    return user ?? null;
+  },
 });
 
-export const CompletedOnboarding = mutation({args: {
+export const completeOnboarding = mutation({
+    args: {
         location: v.object({
-            city: v.string(),
-            state: v.optional(v.string()),
-            country: v.string(),
+        city: v.string(),
+        state: v.optional(v.string()),
+        country: v.string(),
         }),
-        interests: v.array(v.string()), // Min 3 categories
+        interests: v.array(v.string()),
     },
-    handler: async (ctx,args) => {
-        // Check if user is logged in or not 
-        // This is something only logged in users can do
+    handler: async (ctx, args) => {
         const user = await ctx.runQuery(internal.users.getCurrentUser);
+        if (!user) throw new Error("Unauthorized");
 
         await ctx.db.patch(user._id, {
-            location: args.location,
-            interests: args.interests,
-            hasCompletedOnboarding: true,
-            updatedAt: Date.now(),
-        });        return user._id;
+        location: args.location,
+        interests: args.interests,
+        hasCompletedOnboarding: true,
+        updatedAt: Date.now(),
+        });
+
+        return user._id;
     },
-})
+});

@@ -26,11 +26,15 @@ export default function Home() {
                         Whether you&apos;re hosting or attending, Spott makes every event memorable. Join our community today.
                     </p>
 
-                    <Link href="/explore">
-                        <Button size="xl" className={"rounded-full"}>  
+                    <Button
+                        asChild
+                        size="xl"
+                        className="rounded-full cursor-pointer"
+                    >
+                        <Link href="/explore">
                             Get Started
-                        </Button>
-                    </Link>
+                        </Link>
+                    </Button>
 
                 </div>
 
