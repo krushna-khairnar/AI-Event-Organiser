@@ -148,7 +148,7 @@ GEMINI_API_KEY=your_gemini_key
 ## 🧪 Getting Started
 
 ### 1️⃣ Clone the Repository
-git clone https://github.com/krushna-khairnar/spott.git  
+git clone https://github.com/krushna-khairnar/AI-Event-Organiser.git 
 cd spott  
 
 ### 2️⃣ Install Dependencies
