@@ -1,3 +1,4 @@
+// app/api/generate-event/route.js
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
 
@@ -14,7 +15,9 @@ export async function POST(req) {
       );
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash", 
+    });
 
     const systemPrompt = `You are an event planning assistant. Generate event details based on the user's description.
 
@@ -34,7 +37,6 @@ User's event idea: ${prompt}
 Rules:
 - Return ONLY the JSON object, no markdown, no explanation
 - All string values must be on a single line with no line breaks
-- Use spaces instead of \\n or line breaks in description
 - Make title catchy and under 80 characters
 - Description should be 2-3 sentences, informative, single paragraph
 - suggestedTicketType should be either "free" or "paid"
@@ -42,20 +44,20 @@ Rules:
 
     const result = await model.generateContent(systemPrompt);
 
-    const response = await result.response;
-    const text = response.text();
+    const text = result.response.text();
 
-    // Clean the response (remove markdown code blocks if present)
-    let cleanedText = text.trim();
-    if (cleanedText.startsWith("```json")) {
-      cleanedText = cleanedText
-        .replace(/```json\n?/g, "")
-        .replace(/```\n?/g, "");
-    } else if (cleanedText.startsWith("```")) {
-      cleanedText = cleanedText.replace(/```\n?/g, "");
+    if (!text) {
+      throw new Error("Empty response from Gemini");
     }
 
-    console.log(cleanedText);
+    // Clean the response (remove markdown if present)
+    let cleanedText = text.trim();
+    if (cleanedText.startsWith("```")) {
+      cleanedText = cleanedText
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+    }
 
     const eventData = JSON.parse(cleanedText);
 
@@ -63,7 +65,7 @@ Rules:
   } catch (error) {
     console.error("Error generating event:", error);
     return NextResponse.json(
-      { error: "Failed to generate event" + error.message },
+      { error: "Failed to generate event: " + error.message },
       { status: 500 }
     );
   }
